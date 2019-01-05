@@ -1,0 +1,26 @@
+
+<!DOCTYPE html>
+<html lang="ko" class="lang-ko" data-prof="prd">
+<head th:replace="/fragments/base :: common_header(~{::title},~{::link})">
+<title>Currency Web - Error</title>
+<link rel="stylesheet" href="/css/currencyweb_error.css">
+</head>
+<body x-ms-format-detection="none" class="wrap_error" style="min-height: 1129px;">
+	<nav th:replace="/fragments/base :: common_nav()"></nav>
+	<!-- SECTION:CONTENT START -->
+	<section>
+		<div class="container wrap_error">
+			<div class="row">
+				<div class="col-md-12 text-center">
+					<h1>404</h1>
+					<h3>Page Not Found</h3>
+					<a href="/">
+						<button class="btn btn-submit">Back to home</button>
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- SECTION:CONTENT END -->
+</body>
+</html>

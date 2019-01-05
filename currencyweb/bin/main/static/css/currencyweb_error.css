@@ -1,0 +1,43 @@
+@charset "UTF-8";
+
+
+body.wrap_error {
+    background-color: #ececec;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover
+}
+
+div.wrap_error {
+    position: absolute;
+    top: 50%;
+    height: 340px;
+    width: 100%;
+    margin: -170px auto 0
+}
+
+div.wrap_error h1 {
+    font-size: 9.5rem;
+    font-weight: 800;
+    font-family: 'museo_slab900', 'MalgunGothic','Helvetica','Arial',sans-serif
+}
+
+div.wrap_error h3 {
+    font-size: 4rem;
+    font-family: 'Museo-700', 'MalgunGothic','Helvetica','Arial',sans-serif;
+    margin-bottom: 20px
+}
+
+div.wrap_error p {
+    margin-bottom: 5px;
+    font-size: 1.8rem
+}
+
+div.wrap_error button {
+    margin-top: 50px;
+    width: 100%;
+    width: 400px;
+    height: 58px;
+    font-size: 1.7rem
+}

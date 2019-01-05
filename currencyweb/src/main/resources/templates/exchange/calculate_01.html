@@ -1,0 +1,78 @@
+<!doctype html>
+<html ng-app>
+<head th:replace="/fragments/base :: common_header(~{::title},~{::link})">
+  <title>Currency Web - Calculator</title>
+  <link rel="stylesheet" href="/css/currencyweb_calculate.css">
+</head>
+<body>
+	<nav th:replace="/fragments/base :: common_nav()"></nav>
+	<section>
+		<div class="index-top">
+			<div class="container body">
+				<div class="row">
+					<!-- TX START -->
+					<div class="tx col-md-5 col-sm-5 col-xs-12">
+						<div class="tx">
+							<form class="form-horizontal">
+								<!-- TRANSACTION SEND START  -->
+								<div class="send col-md-12">
+									<div class="col-md-12">
+										<div class="input-group border-underline-green">
+											<select id="source" class="selectpicker" data-style="border-zero" data-width="auto">
+												<option value="KRW">KRW</option>
+											</select> <input id="sourceAmt" name="sendAmount" type="text" class="amount form-control text-right border-zero amt" />
+										</div>
+									</div>
+								</div>
+								<!-- TRANSACTION SEND END -->
+
+								<!-- TRANSACTION RECEIVE START -->
+								<div class="receive col-md-12">
+									<div class="col-md-12">
+										<div class="input-group border-underline-green">
+											<select id="dest" class="selectpicker" data-style="border-zero" data-width="auto">
+												<option value="PHP">PHP</option>
+											</select> <input id="destAmt" name="receiveAmount" type="text" class="amount form-control text-right border-zero amt" />
+										</div>
+									</div>
+									<div class="col-md-12 ex-rate-index">
+										<div class="ex-rate pull-left">
+											<span class="ex-rate-datetime">2019. 01. 05. 오후 7:45</span>
+										</div>
+										<div class="ex-rate">
+											<span id="source-base">1</span>&nbsp;<span id="source-currency" class="source">JPY</span> = <span class="dest-ex-rate">1</span>&nbsp;<span id="dest-currency" class="dest">KRW</span>
+										</div>
+									</div>
+								</div>
+								<!-- TRANSACTION RECEIVE END -->
+								<div class="">
+									<button type="button" class="btn btn-submit btn-block">Calculate</button>
+								</div>
+							</form>
+						</div>
+					</div>
+					<!-- TX END -->
+				</div>
+			</div>
+		</div>
+	</section>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			inquireRates();
+		});
+		
+		function inquireRates(){
+			var data = {};
+			data.from = '';
+			data.to = '';
+			Logger.debug('data='+JSON.stringify(data));
+			
+			Util.getApi('/api/rates', data, function(){
+				Logger.debug('ok');	
+			});
+		}
+		
+	</script>
+	<nav th:replace="/fragments/base :: common_footer()"></nav>
+</body>
+</html>

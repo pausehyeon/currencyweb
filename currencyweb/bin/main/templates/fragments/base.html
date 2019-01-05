@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head th:fragment="common_header(title,links)">
+<title th:replace="${title}">Currency Web</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+<meta name="title" content="Currency Web - Welcome">
+<meta name="description" content="See exchange rate and calculate currency">
+<meta name="author" content="pausehyeon">
+<!-- Common styles and scripts -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
+<link rel="stylesheet" href="/css/currencyweb.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
+<script src="/js/currencyweb.js"></script>
+<!--/* Per-page placeholder for additional links */-->
+<th:block th:replace="${links}" />
+</head>
+<body th:fragment="common_nav()">
+	<nav class="navbar navbar-fixed-top">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-9 col-sm-9">
+					<div class="navbar-header">
+						<span>Currency Web</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</nav>
+</body>
+<body th:fragment="common_footer()">
+	<footer>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 col-sm-6 col-xd-12 visible-xs">
+					<small>by pausehyeon@gmail.com</small>
+				</div>
+			</div>
+		</div>
+	</footer>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<!doctype html>
+<html>
+<head th:replace="/fragments/base :: common_header(~{::title},~{})">
+<title>Currency Web - Welcome!</title>
+</head>
+<body>
+	<script type="text/javascript">
+  $(document).ready(function(){
+  	window.location.href = '/exchange/calculate';
+  });
+  </script>
+</body>
+</html>
