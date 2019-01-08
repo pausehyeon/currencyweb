@@ -7,3 +7,5 @@
   Spring Boot 2.1.1,
   Spring Tool Suite 4,
   Gradle 4.10.2
+  
+![Screenshot](CurrencyWeb.png)
