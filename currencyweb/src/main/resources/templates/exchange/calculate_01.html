@@ -1,8 +1,8 @@
 <!doctype html>
-<html ng-app>
+<html ng-app="app">
 <head th:replace="/fragments/base :: common_header(~{::title},~{::link})">
-  <title>Currency Web - Calculator</title>
-  <link rel="stylesheet" href="/css/currencyweb_calculate.css">
+<title>Currency Web - Calculator</title>
+<link rel="stylesheet" href="/css/currencyweb_calculate.css">
 </head>
 <body>
 	<nav th:replace="/fragments/base :: common_nav()"></nav>
@@ -11,17 +11,18 @@
 			<div class="container body">
 				<div class="row">
 					<!-- TX START -->
-					<div class="tx col-md-5 col-sm-5 col-xs-12">
+					<div ng-controller="calcController" class="tx col-md-5 col-sm-5 col-xs-12">
 						<div class="tx">
-							<form class="form-horizontal">
+							<form name="txForm" class="form-horizontal">
 								<!-- TRANSACTION SEND START  -->
 								<div class="send col-md-12">
-									<div class="col-md-12">
+									<div class="col-md-12 text-right">
 										<div class="input-group border-underline-green">
-											<select id="source" class="selectpicker" data-style="border-zero" data-width="auto">
-												<option value="KRW">KRW</option>
-											</select> <input id="sourceAmt" name="sendAmount" type="text" class="amount form-control text-right border-zero amt" />
+											<select ng-model="source" ng-options="x for x in sourceArr" ng-change="inquire()" class="selectpicker" data-style="border-zero" data-width="auto">
+											</select> <input ng-model="sourceAmt" ng-currency currency-symbol="" min="0" max="10000" ng-required="true" name="sourceAmt" type="text" class="form-control text-right border-zero" />
 										</div>
+										<small ng-show="!txForm.sourceAmt.$error.required && txForm.sourceAmt.$error.min" th:text=#{warn.input.min.sourceAmt('0')} class="text-danger"></small>
+										<small ng-show="!txForm.sourceAmt.$error.required && txForm.sourceAmt.$error.max" th:text=#{warn.input.max.sourceAmt('10,000{{source}}')} class="text-danger"></small>
 									</div>
 								</div>
 								<!-- TRANSACTION SEND END -->
@@ -30,23 +31,22 @@
 								<div class="receive col-md-12">
 									<div class="col-md-12">
 										<div class="input-group border-underline-green">
-											<select id="dest" class="selectpicker" data-style="border-zero" data-width="auto">
-												<option value="PHP">PHP</option>
-											</select> <input id="destAmt" name="receiveAmount" type="text" class="amount form-control text-right border-zero amt" />
+											<select ng-model="target" ng-options="x for x in targetArr" ng-change="inquire()" class="selectpicker" data-style="border-zero" data-width="auto">
+											</select> <input type="text" value="{{sourceAmt * rate | currency:''}}" class="form-control text-right border-zero" readonly="readonly" />
 										</div>
 									</div>
 									<div class="col-md-12 ex-rate-index">
 										<div class="ex-rate pull-left">
-											<span class="ex-rate-datetime">2019. 01. 05. 오후 7:45</span>
+											<span>{{datetime}}</span>
 										</div>
 										<div class="ex-rate">
-											<span id="source-base">1</span>&nbsp;<span id="source-currency" class="source">JPY</span> = <span class="dest-ex-rate">1</span>&nbsp;<span id="dest-currency" class="dest">KRW</span>
+											<input type="hidden" ng-model="rate"> <span>1</span>&nbsp;<span>{{source}}</span> = <span>{{rate | currency:''}}</span>&nbsp;<span>{{target}}</span>
 										</div>
 									</div>
 								</div>
 								<!-- TRANSACTION RECEIVE END -->
-								<div class="">
-									<button type="button" class="btn btn-submit btn-block">Calculate</button>
+								<div>
+									<button type="button" ng-click="inquire()" class="btn btn-submit btn-block">Calculate</button>
 								</div>
 							</form>
 						</div>
@@ -57,21 +57,40 @@
 		</div>
 	</section>
 	<script type="text/javascript">
-		$(document).ready(function(){
-			inquireRates();
-		});
-		
-		function inquireRates(){
-			var data = {};
-			data.from = '';
-			data.to = '';
-			Logger.debug('data='+JSON.stringify(data));
+		var app = angular.module("app", ['ng-currency']);
+
+		app.controller("calcController", function($scope, $http) {
+			$scope.sourceArr = [ "USD" ];
+			$scope.targetArr = [ "KRW", "JPY", "PHP" ];
+			$scope.source = $scope.sourceArr[0];
+			$scope.target = $scope.targetArr[0];
+
+			$scope.inquire = function(){
+				var data = {};
+				data.source = $scope.source;
+				data.target = $scope.target;
+				Logger.debug('data=' + JSON.stringify(data));
+				$http({
+			        method: 'GET',
+			        url: '/api/rates',
+			        params: data,
+			    }).then(function(response) {
+			    	Logger.debug("response.data="+JSON.stringify(response.data));
+					if(response.data.ok){
+				    	$scope.rate = response.data.rate;
+						$scope.datetime = response.data.datetime;						
+					}else{
+				    	Logger.error("response.data="+JSON.stringify(response.data));
+				    	window.location.href = '/error';
+					}
+			    }, function(response) {
+			        Logger.error(response.statusText);
+			    	window.location.href = '/error';
+			    });
+			};
 			
-			Util.getApi('/api/rates', data, function(){
-				Logger.debug('ok');	
-			});
-		}
-		
+			$scope.inquire();
+		});
 	</script>
 	<nav th:replace="/fragments/base :: common_footer()"></nav>
 </body>

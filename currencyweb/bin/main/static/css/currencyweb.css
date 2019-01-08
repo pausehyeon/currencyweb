@@ -1,5 +1,13 @@
 @charset "UTF-8";
 
+html, body {
+    height: 100%;
+}
+
+body {
+	background-color: #2A2722;
+}
+
 input {
     -moz-box-shadow: none !important;
 }

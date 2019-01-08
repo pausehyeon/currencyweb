@@ -16,6 +16,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
+<script src="/js/lib/ng-currency.min.js"></script>
 <script src="/js/currencyweb.js"></script>
 <!--/* Per-page placeholder for additional links */-->
 <th:block th:replace="${links}" />
@@ -26,7 +27,7 @@
 			<div class="row">
 				<div class="col-md-9 col-sm-9">
 					<div class="navbar-header">
-						<span>Currency Web</span>
+						<span th:text="#{header.sitename}"></span>
 					</div>
 				</div>
 			</div>
@@ -38,7 +39,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 col-sm-6 col-xd-12 visible-xs">
-					<small>by pausehyeon@gmail.com</small>
+					<small th:text="#{footer.author}"></small>
 				</div>
 			</div>
 		</div>
